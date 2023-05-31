@@ -32,7 +32,6 @@ app.get('/api/persons/:id', (request, response) => {
 })
 
 app.post('/api/persons', (request, response) => {
-  const newId = Math.floor(Math.random() * 100000)
   const body = request.body
 
   if (!body.name || !body.number){
@@ -41,20 +40,19 @@ app.post('/api/persons', (request, response) => {
     })
   }
 
-  if(persons.find(person => person.name === body.name)){
-    return response.status(400).json({
-      error: 'name must be unique' 
-    })
-  }
+  // if(persons.find(person => person.name === body.name)){
+  //   return response.status(400).json({
+  //     error: 'name must be unique' 
+  //   })
+  // }
 
-  const person = {
-    id: newId,
+  const person = new Person({
     name: body.name,
     number: body.number
-  }
-  persons = persons.concat(person)
-  response.json(person)
-
+  })
+  person.save().then(savedPerson => {
+  response.json(savedPerson)
+  })
 })
 
 app.delete('/api/persons/:id', (request, response) => {
