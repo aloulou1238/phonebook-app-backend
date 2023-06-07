@@ -39,10 +39,3 @@ if (process.argv.length === 3) {
     mongoose.connection.close()
   })
 }
-
-// Note.find({}).then(result => {
-//   result.forEach(note => {
-//     console.log(note)
-//   })
-//   mongoose.connection.close()
-// })

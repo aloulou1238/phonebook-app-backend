@@ -18,11 +18,14 @@ const requestLogger = (request, response, next) => {
   console.log('---')
   next()
 }
-
 // app.use(requestLogger)
+let leng = 0
 
 app.get('/api/persons', (request, response) => {
-  Person.find({}).then(persons => response.json(persons))
+  Person.find({}).then(persons => {
+    response.json(persons)
+    leng = persons.length
+  })
 })
 
 app.get('/api/persons/:id', (request, response) => {
@@ -76,7 +79,7 @@ app.delete('/api/persons/:id', (request, response, next) => {
 
 app.get('/info', (request, response) => {
   const date = new Date()
-  response.send(`<p>Phonebook has info for ${persons.length} persons<p> <p>${date}</p>`)
+  response.send(`<p>Phonebook has info for ${leng} persons<p> <p>${date}</p>`)
 })
 
 const errorHandler = (error, request, response, next) => {
